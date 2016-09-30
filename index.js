@@ -108,6 +108,10 @@ function createRock(x) {
  * Finally, alert "YOU LOSE!" to the player.
  */
 function endGame() {
+  gameInterval = null;
+  // removeElementsByClass('rock');
+  // window.removeEventListener('keydown',moveDodger);
+  alert('YOU LOSE!');
 }
 
 function moveDodger(e) {
@@ -119,6 +123,14 @@ function moveDodger(e) {
    * we've declared for you above.)
    * And be sure to use the functions declared below!
    */
+
+  if ( e.which ==  LEFT_ARROW ) {
+    moveDodgerLeft();
+  }
+
+  if ( e.which ==  RIGHT_ARROW ) {
+    moveDodgerRight();
+  }
 }
 
 function moveDodgerLeft() {
@@ -127,6 +139,15 @@ function moveDodgerLeft() {
    * This function should move DODGER to the left
    * (mabye 4 pixels?). Use window.requestAnimationFrame()!
    */
+  var dodgerLeftEdge = positionToInteger(DODGER.style.left);
+  const left = dodgerLeftEdge - 4;
+  function step() {
+    if ( (left < dodgerLeftEdge) && dodgerLeftEdge > 0  ) {
+      DODGER.style.left = `${dodgerLeftEdge -= 1}px`;
+      window.requestAnimationFrame(step);
+    }
+  }
+  window.requestAnimationFrame(step);
 }
 
 function moveDodgerRight() {
@@ -135,6 +156,15 @@ function moveDodgerRight() {
    * This function should move DODGER to the right
    * (mabye 4 pixels?). Use window.requestAnimationFrame()!
    */
+  var dodgerLeftEdge = positionToInteger(DODGER.style.left);
+  const left = dodgerLeftEdge + 4;
+  function step() {
+    if ( (left > dodgerLeftEdge) && dodgerLeftEdge < 360  ) {
+      DODGER.style.left = `${dodgerLeftEdge += 1}px`;
+      window.requestAnimationFrame(step);
+    }
+  }
+  window.requestAnimationFrame(step);
 }
 
 /**
@@ -153,4 +183,11 @@ function start() {
   gameInterval = setInterval(function() {
     createRock(Math.floor(Math.random() *  (GAME_WIDTH - 20)))
   }, 1000)
+}
+
+function removeElementsByClass(className){
+    var elements = document.getElementsByClassName(className);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }

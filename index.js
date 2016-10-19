@@ -86,7 +86,7 @@ function createRock(x) {
     // }
     
 
-    if (top < 300) {
+    if (top < 400) {
       rock.style.top = `${top += 1}px`;
       if (checkCollision(rock)) {
         rock.remove()

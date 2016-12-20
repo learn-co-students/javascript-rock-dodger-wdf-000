@@ -8,18 +8,10 @@ const ROCKS = []
 const START = document.getElementById('start')
 
 var gameInterval = null
-/**
- * Be aware of what's above this line,
- * but all of your work should happen below.
- */
+
 function checkCollision(rock) {
-  // implement me!
-  // use the comments below to guide you!
   const top = positionToInteger(rock.style.top)
 
-  // rocks are 20px high
-  // DODGER is 20px high
-  // GAME_HEIGHT - 20 - 20 = 360px;
   if ((top > 360) && (top < 400)) {
     const dodgerLeftEdge = positionToInteger(DODGER.style.left)
     
@@ -60,30 +52,17 @@ function createRock(x) {
 
       window.requestAnimationFrame(moveRock);
       } else {
-      // setTimeout(rock.remove(), 50);
         rock.remove()
       }
     }
   window.requestAnimationFrame(moveRock)
-  // We should kick of the animation of the rock around here
-  // Add the rock to ROCKS so that we can remove all rocks
-  // when there's a collision
   ROCKS.push(rock)
-  // Finally, return the rock element you've created
-  // window.requestAnimationFrame(moveRock);
   return rock
 }
-/**
- * End the game by clearing `gameInterval`,
- * removing all ROCKS from the DOM,
- * and removing the `moveDodger` event listener.
- * Finally, alert "YOU LOSE!" to the player.
- */
-function endGame() {
 
+function endGame() {
   clearInterval(gameInterval, 0);
   document.removeEventListener('keydown', moveDodger);
-  // for (var rock of GAME.querySelectorAll('div.rock')) {
   for (var i = 0, len = ROCKS.length; i < len; i++) {
     ROCKS[i].remove()
   }
@@ -99,14 +78,6 @@ function moveDodger(e) {
   if (e.which !== LEFT_ARROW && e.which !== RIGHT_ARROW) {
     return;
   } 
-  /**
-   * This function should call `moveDodgerLeft()`
-   * if the left arrow is pressed and `moveDodgerRight()`
-   * if the right arrow is pressed. (Check the constants
-   * we've declared for you above.)
-   * And be sure to use the functions declared below!
-   */
-
   e.preventDefault();
 
   if (e.which === LEFT_ARROW) {
@@ -151,10 +122,6 @@ function moveDodgerRight() {
   window.requestAnimationFrame(step) 
 }
 
-/**
- * @param {string} p The position property
- * @returns {number} The position as an integer (without 'px')
- */
 function positionToInteger(p) {
   return parseInt(p.split('px')[0]) || 0
 }

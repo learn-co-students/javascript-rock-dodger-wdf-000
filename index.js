@@ -1,6 +1,3 @@
-/**
- * Don't change these constants!
- */
 const DODGER = document.getElementById('dodger')
 const GAME = document.getElementById('game')
 const GAME_HEIGHT = 400
@@ -26,12 +23,10 @@ function checkCollision(rock) {
   if ((top > 360) && (top < 400)) {
     const dodgerLeftEdge = positionToInteger(DODGER.style.left)
     
-    // FIXME: The DODGER is 40 pixels wide -- how do we get the right edge?
     const dodgerRightEdge = dodgerLeftEdge + 40;
     
     const rockLeftEdge = positionToInteger(rock.style.left)
     
-    // FIXME: The rock is 20 pixel's wide -- how do we get the right edge?
     const rockRightEdge = rockLeftEdge + 20;
     
     if (((rockLeftEdge < dodgerLeftEdge) && (rockRightEdge > dodgerLeftEdge)) ||
@@ -39,16 +34,6 @@ function checkCollision(rock) {
         ((rockLeftEdge <= dodgerRightEdge) && (rockRightEdge >= dodgerRightEdge))
         ) {
       return true
-      /**
-             * Think about it -- what's happening here?
-             * There's been a collision if one of three things is true:
-             * 1. The rock's left edge is < the DODGER's left edge,
-             *    and the rock's right edge is > the DODGER's left edge;
-             * 2. The rock's left edge is > the DODGER's left edge,
-             *    and the rock's right edge is < the DODGER's right edge;
-             * 3. The rock's left edge is < the DODGER's right edge,
-             *    and the rock's right edge is > the DODGER's right edge
-             */
     }
   }
 }
@@ -58,8 +43,6 @@ function createRock(x) {
   rock.className = 'rock'
   rock.style.left = `${x}px`
 
-  // Hmmm, why would we have used `var` here?
-      
   var top = rock.style.top = 0
 
   rock.style.top = top
@@ -68,24 +51,6 @@ function createRock(x) {
   checkCollision(rock)
 
   function moveRock() {
-    // implement me!
-    // (use the comments below to guide you!)
-    /**
-     * If a rock collides with the DODGER,
-     * we should call endGame()
-     */
-
-    // if ( top < 400  ) {
-    //  rock.style.top = `${top += 2}px`;
-    //  if (top > 355 && checkCollision(rock) ) {
-    //    rock.remove();
-    //    return endGame();
-    //  }
-    //  window.requestAnimationFrame(moveRock);
-    //  } else { rock.remove(); }
-    // }
-    
-
     if (top < 400) {
       rock.style.top = `${top += 1}px`;
       if (checkCollision(rock)) {
@@ -99,25 +64,6 @@ function createRock(x) {
         rock.remove()
       }
     }
-    // if (checkCollision(rock)) {
-    //   return endGame();
-    // } else {
-    //   rock.style.top = parseInt(rock.style.top) + 2 + 'px'  
-    //   window.requestAnimationFrame(moveRock)
-    //   if (rock.style.top > GAME_HEIGHT) {
-    //     rock.remove();
-    //     // GAME.removeChild(rock);
-    //     // rock.parentNode.removeChild(rock) 
-    //    } 
-    // }
-    /**
-     * Otherwise, if the rock hasn't reached the bottom of
-     * the GAME, we want to move it again.
-     */
-    /**
-     * But if the rock *has* reached the bottom of the GAME,
-     * we should remove the rock from the DOM
-     */
   window.requestAnimationFrame(moveRock)
   // We should kick of the animation of the rock around here
   // Add the rock to ROCKS so that we can remove all rocks
@@ -139,10 +85,11 @@ function endGame() {
   document.removeEventListener('keydown', moveDodger);
   // for (var rock of GAME.querySelectorAll('div.rock')) {
   for (var i = 0, len = ROCKS.length; i < len; i++) {
-    
     ROCKS[i].remove()
   }
 
+  START.innerHTML = 'Play again?'
+  START.style.display = 'inline'
 
   alert("YOU LOSE");
 }
@@ -152,7 +99,6 @@ function moveDodger(e) {
   if (e.which !== LEFT_ARROW && e.which !== RIGHT_ARROW) {
     return;
   } 
-  // implement me!
   /**
    * This function should call `moveDodgerLeft()`
    * if the left arrow is pressed and `moveDodgerRight()`
